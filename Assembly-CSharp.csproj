@@ -56,12 +56,15 @@
     <Compile Include="Assets\Scripts\BlockCollision.cs" />
     <Compile Include="Assets\Scripts\BazziMovement.cs" />
     <Compile Include="Assets\Scripts\ItemCollectCollision.cs" />
+    <Compile Include="Assets\Scripts\BubbleController.cs" />
     <Compile Include="Assets\Scripts\GridController.cs" />
+    <Compile Include="Assets\Scripts\ExplosionAction.cs" />
     <Compile Include="Assets\Scripts\PutBoomSpawn.cs" />
     <Compile Include="Assets\Scripts\ExplosionController.cs" />
+    <Compile Include="Assets\Scripts\GhostMovement.cs" />
     <Compile Include="Assets\Scripts\WaterBallCollision.cs" />
     <Compile Include="Assets\Scripts\BlockController.cs" />
-    <Compile Include="Assets\Scripts\GhostMovement.cs" />
+    <Compile Include="Assets\Scripts\PirateChildXController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -690,6 +693,12 @@
     </Reference>
     <Reference Include="Unity.2D.IK.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Triangle.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Animation.Triangle.Runtime.dll</HintPath>

@@ -20,7 +20,7 @@ public class ItemCollectCollision : MonoBehaviour
             }
             if (gameObject.name.Contains("speed"))
             {
-                bazziMovementInstance.UpSpeedHero();
+                //bazziMovementInstance.UpSpeedHero();
             }
             Destroy(gameObject);
         }

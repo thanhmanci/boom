@@ -7,7 +7,7 @@ public class BazziMovement : MonoBehaviour
 {
     public Animator animator;
 
-    private float moveSpeed = 1.25f;
+    private float moveSpeed = 2.25f;
 
     public Rigidbody2D rb;
 
@@ -31,7 +31,6 @@ public class BazziMovement : MonoBehaviour
         // rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
         if (Input.GetKey(KeyCode.RightArrow))
         {
-
             transform.position += transform.right * Time.deltaTime * moveSpeed;
             return;
         }

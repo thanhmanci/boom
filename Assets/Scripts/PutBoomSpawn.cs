@@ -21,6 +21,8 @@ public class PutBoomSpawn : MonoBehaviour
     public static int HorizontalLength = 2;
 
     private List<string> postionSpawnBoom = new List<string>();
+    public LayerMask levelMask;
+
 
     void Start()
     {
@@ -29,6 +31,7 @@ public class PutBoomSpawn : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             var waterBall = (GameObject)Instantiate(waterBallPrefab);
+            waterBall.transform.parent = GameObject.Find("Tilemap").transform;
             waterBall.name = "waterBall #" + i;
             waterBall.SetActive(false);
             listWaterBall.Add(waterBall);
@@ -37,9 +40,6 @@ public class PutBoomSpawn : MonoBehaviour
 
     void Update()
     {
-        float xDirection = NearestQuarter(playerObj.transform.position.x);
-        float yDirection = NearestQuarter(playerObj.transform.position.y - 0.3f);
-        var heroPosition = new Vector2(xDirection, yDirection);
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // InvokeRepeating("Spawn", speedSpawn, speedSpawn);
@@ -49,7 +49,6 @@ public class PutBoomSpawn : MonoBehaviour
             }
         }
     }
-
 
     void SpawnBoom()
     {
@@ -63,8 +62,13 @@ public class PutBoomSpawn : MonoBehaviour
         {
             if (!waterBall.activeInHierarchy)
             {
-                waterBall.transform.position = heroPosition;
+                waterBall.transform.position = new Vector2(heroPosition.x, heroPosition.y);
                 waterBall.SetActive(true);
+                //print(waterBall.transform.position);
+                //if (Physics.Linecast(waterBall.transform.position, new Vector3(waterBall.transform.position.x, waterBall.transform.position.y + 0.5f, 0)))
+                //{
+                //    print("OKKOKOKOKK");
+                //}
                 listWaterBallActive.Add(waterBall);
                 postionSpawnBoom.Add(waterBall.transform.position.x + "_" + waterBall.transform.position.y);
                 currentWaterBall = waterBall;
@@ -106,56 +110,62 @@ public class PutBoomSpawn : MonoBehaviour
         var positionX = waterBall.transform.position.x;
         var positionY = waterBall.transform.position.y;
         var middleExplosionObj = Instantiate(explosion, waterBall.transform.position, waterBall.transform.rotation);
+        middleExplosionObj.transform.parent = GameObject.Find("Tilemap").transform;
         for (int i = 0; i < HorizontalLength; i++)
         {
             positionX += 0.5f;
             var newPostion = new Vector2(positionX, waterBall.transform.position.y);
-            var explosionObj = Instantiate(explosionHorizontal, newPostion, waterBall.transform.rotation);
-            Destroy(explosionObj, 0.3f);
-            var blockExist = GameObject.Find($"Block#{positionX},{waterBall.transform.position.y}");
-            if (blockExist)
+            RaycastHit2D hit = Physics2D.Raycast(newPostion, new Vector2(0, 0));
+            if (hit.collider)
             {
                 break;
-            }
+            };
+            var explosionObj = Instantiate(explosionHorizontal, newPostion, waterBall.transform.rotation);
+            explosionObj.transform.parent = GameObject.Find("Tilemap").transform;
+            Destroy(explosionObj, 0.3f);
         }
         positionX = waterBall.transform.position.x;
         for (int i = 0; i < HorizontalLength; i++)
         {
             positionX -= 0.5f;
             var newPostion = new Vector2(positionX, waterBall.transform.position.y);
-            var explosionObj = Instantiate(explosionHorizontal, newPostion, waterBall.transform.rotation);
-            Destroy(explosionObj, 0.3f);
-            var blockExist = GameObject.Find($"Block#{positionX},{waterBall.transform.position.y}");
-            if (blockExist)
+            RaycastHit2D hit = Physics2D.Raycast(newPostion, new Vector2(0, 0));
+            if (hit.collider)
             {
                 break;
-            }
+            };
+            var explosionObj = Instantiate(explosionHorizontal, newPostion, waterBall.transform.rotation);
+            explosionObj.transform.parent = GameObject.Find("Tilemap").transform;
+            Destroy(explosionObj, 0.3f);
         }
 
         for (int i = 0; i < VerticalLength; i++)
         {
             positionY += 0.5f;
             var newPostion = new Vector2(waterBall.transform.position.x, positionY);
-            var explosionObj = Instantiate(explosionVertical, newPostion, waterBall.transform.rotation);
-            Destroy(explosionObj, 0.3f);
-            var blockExist = GameObject.Find($"Block#{waterBall.transform.position.x},{positionY}");
-            if (blockExist)
+            RaycastHit2D hit = Physics2D.Raycast(newPostion, new Vector2(0, 0));
+            if (hit.collider)
             {
                 break;
-            }
+            };
+            var explosionObj = Instantiate(explosionVertical, newPostion, waterBall.transform.rotation);
+            explosionObj.transform.parent = GameObject.Find("Tilemap").transform;
+            Destroy(explosionObj, 0.3f);
         }
         positionY = waterBall.transform.position.y;
         for (int i = 0; i < VerticalLength; i++)
         {
             positionY -= 0.5f;
-            var newPostion = new Vector2(waterBall.transform.position.x, positionY);
-            var explosionObj = Instantiate(explosionVertical, newPostion, waterBall.transform.rotation);
-            Destroy(explosionObj, 0.3f);
-            var blockExist = GameObject.Find($"Block#{waterBall.transform.position.x},{positionY}");
-            if (blockExist)
+            var newPostion = new Vector3(waterBall.transform.position.x, positionY, 0);
+            RaycastHit2D hit = Physics2D.Raycast(newPostion, new Vector2(0, 0));
+            if (hit.collider)
             {
                 break;
-            }
+            };
+            var explosionObj = Instantiate(explosionVertical, newPostion, waterBall.transform.rotation);
+            explosionObj.transform.parent = GameObject.Find("Tilemap").transform;
+            Destroy(explosionObj, 0.3f);
+
         }
         Destroy(middleExplosionObj, 0.3f);
     }
@@ -179,6 +189,5 @@ public class PutBoomSpawn : MonoBehaviour
     {
         maximumBoomItems++;
     }
-
 
 }
